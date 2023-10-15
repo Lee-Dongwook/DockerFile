@@ -5,7 +5,7 @@ FROM node:18-alpine as builder
 WORKDIR /usr/src/app
 
 # 현재 디렉토리 내 package.json 및 yarn.lock 파일을 작업 디렉토리에 복사
-COPY ./package.json ./yarn.lock ./
+COPY ./package.json ./
 
 # dependency 설치
 RUN yarn install
@@ -14,7 +14,7 @@ RUN yarn install
 COPY . .
 
 # React app 빌드
-RUN yarn run build
+RUN yarn build
 
 # Nginx 공식 이미지 사용
 FROM nginx

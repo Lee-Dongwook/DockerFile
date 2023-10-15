@@ -18,6 +18,12 @@ jobs:
               uses: actions/setup-node@v2
               with:
                 node-version: 18
+
+            - name: dependency install
+              run: |
+                npm i -g yarn
+                yarn install
+              working-directory: './client'
             
             - name: Build React App
               run: yarn run build
@@ -27,8 +33,7 @@ jobs:
               if: contains(github.ref, 'main')
               run: |
                 docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-                docker build -f Dockerfile -t ${{secrets.DOCKER_USERNAME}}/docker-test-prod
-                docker push ${{secrets.DOCKER_USERNAME}}/docker-test-prod
+                docker-compose up -d
 
             - name: Deploy to prod
               uses: appleboy/ssh-action@master
@@ -41,8 +46,8 @@ jobs:
                 envs: GITHUB_SHA
                 script: |
                     sudo docker ps
-                    sudo docker pull ${{secrets.DOCKER_USERNAME}}/docker-test-prod
-                    sudo docker run -d -p 3000:3000 ${{secrets.DOCKER_USERNAME}}/docker-test-prod
+                    sudo docker pull ${{secrets.DOCKER_USERNAME}}/app_frontend
+                    sudo docker run -d -p 3000:3000 ${{secrets.DOCKER_USERNAME}}/app_frontend
                     sudo docker image prune -f
                 
               

@@ -8,8 +8,8 @@ services:
       - 3000:3000
     stdin_open: true
 
-  backend: 
-    build: ./
-    container_name: app_backend
-    ports:
-      - 5000:5000
+  # backend: 
+  #   build: ./
+  #   container_name: app_backend
+  #   ports:
+  #     - 5000:5000
