@@ -48,7 +48,7 @@ jobs:
                     sudo apt-get update
                     sudo apt-get install -y docker.io
                     sudo docker ps
-                    sudo docker pull ${{secrets.DOCKER_USERNAME}}/app_frontend
+                    sudo docker pull ${{secrets.DOCKER_USERNAME}}/app_frontend:latest
                     sudo docker run -d -p 3000:3000 ${{secrets.DOCKER_USERNAME}}/app_frontend
                     sudo docker image prune -f
                 
